@@ -1,4 +1,4 @@
-package com.ns.jetpackdemo
+package com.example.newjetpackapp
 
 import org.junit.Test
 

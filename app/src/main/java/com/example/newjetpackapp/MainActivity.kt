@@ -1,26 +1,29 @@
-package com.ns.jetpackdemo
+package com.example.newjetpackapp
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.ns.jetpackdemo.ui.theme.JetPackDemoTheme
+import com.example.newjetpackapp.ui.theme.NewJetPackAppTheme
+import com.example.newjetpackapp.ui.theme.Pink80
+import com.example.newjetpackapp.ui.theme.Red
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            JetPackDemoTheme {
+            NewJetPackAppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    color = Red
                 ) {
                     Greeting("Android")
                 }
@@ -30,14 +33,15 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+fun Greeting(name: String="") {
+    Text(
+        text = "Hello $name!"
+    )
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun DefaultPreview() {
-    JetPackDemoTheme {
+fun GreetingPreview() {
         Greeting("Android")
-    }
+
 }
