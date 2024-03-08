@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "168600610830",
+    "project_id": "newjetpackappdemo",
+    "storage_bucket": "newjetpackappdemo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:168600610830:android:dd6e1b1556c9e4b90bb45f",
+        "android_client_info": {
+          "package_name": "com.example.newjetpackapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtxxeSvKg23hcD15mBJXfSCeHPjzw5JII"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

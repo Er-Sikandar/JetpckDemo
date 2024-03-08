@@ -1,4 +1,4 @@
-package com.example.newjetpackapp.ui.theme
+package com.example.newjetpackapp.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
