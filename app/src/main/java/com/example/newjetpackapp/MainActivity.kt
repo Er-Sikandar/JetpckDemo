@@ -51,10 +51,13 @@ class MainActivity : ComponentActivity() {
         setContent {
             NewJetPackAppTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    Column(verticalArrangement =Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally) {
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
                         val navController = rememberNavController()
-                        MyCusNav.MyNav(navController, Const.SPLASH_GO, Bundle.EMPTY)
+                        NavGraph(navController = navController,Screens.SplashGo.route)
+
                     }
 
                 }
@@ -64,33 +67,47 @@ class MainActivity : ComponentActivity() {
     }
 
 
-
 }
+
 @Composable
-fun SplashGo(navController:NavController) {
+fun SplashGo(navController: NavController) {
     MyImage()
     LaunchedEffect(key1 = true) {
         delay(Const.SPLASH_TIME.toLong())
-        navController.navigate(Const.LOGIN_SCREEN){
+        navController.navigate(Screens.LoginScreen.route) {
             launchSingleTop = true
             popUpTo(navController.graph.startDestinationId) {
-                inclusive = true
+                inclusive = true  //back finish
             }
         }
     }
 }
 
+@Composable
+fun NavGraph(navController: NavHostController,route:String) {
+    NavHost(navController, startDestination = route) {
+        composable(route = Screens.SplashGo.route) {
+            SplashGo(navController)
+        }
+        composable(route = Screens.LoginScreen.route) {
+            val arguments = bundleOf(Const.USER_NAME to "Developer", Const.EMAIL to "sikandar@example.com")
+            LoginScreen(navController, arguments)
+        }
+    }
+}
 
 @Composable
 fun MyGreeting(name: String) {
-    Text(text = "Hello, $name !",
+    Text(
+        text = "Hello, $name !",
         fontWeight = FontWeight.ExtraBold,
         fontSize = 18.sp,
         textAlign = TextAlign.Center,
         lineHeight = TextUnit.Unspecified,
 
-    )
+        )
 }
+
 @Composable
 fun MyImage() {
     Image(
@@ -113,28 +130,32 @@ fun MyFun(navController: NavController) {
 @Composable
 fun MyInFin() {
     val context = LocalContext.current
-    Button(onClick = {
-        Toast.makeText(context, "This is a Sample Toast", Toast.LENGTH_LONG).show()
-    },
+    Button(
+        onClick = {
+            Toast.makeText(context, "This is a Sample Toast", Toast.LENGTH_LONG).show()
+        },
         shape = RoundedCornerShape(8.dp),
-        /*border = BorderStroke(0.5.dp, App_color),*/) {
-         Text(text = stringResource(R.string.next))
+        /*border = BorderStroke(0.5.dp, App_color),*/
+    ) {
+        Text(text = stringResource(R.string.next))
     }
 }
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun GreetingPreview() {
-    Column(verticalArrangement =Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally) {
-      //  SplashGo()
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        //  SplashGo()
         MyImage()
     }
-       /* Column( modifier = Modifier.fillMaxSize(),
-        verticalArrangement =Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally) {
-            MyImage()
-            *//*Greeting(name = "NewJetPackApp")
+    /* Column( modifier = Modifier.fillMaxSize(),
+     verticalArrangement =Arrangement.Center,
+     horizontalAlignment = Alignment.CenterHorizontally) {
+         MyImage()
+         *//*Greeting(name = "NewJetPackApp")
             MyButton()
             Greeting(name = "NewJetPackApp")
             MyButton()
@@ -165,7 +186,6 @@ private fun GreetingPreview() {
             Greeting(name = "NewJetPackApp")
             MyButton()*//*
     }*/
-
 
 
 }

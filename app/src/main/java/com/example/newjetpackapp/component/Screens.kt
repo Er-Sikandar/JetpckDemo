@@ -3,7 +3,7 @@ package com.example.newjetpackapp.component
 import com.example.newjetpackapp.utils.Const
 
 sealed class Screens(val route:String){
-    data object MainScreen : Screens(route = Const.MAIN_SCREEN)
+    data object SplashGo : Screens(route = Const.SPLASH_GO)
     data object LoginScreen : Screens(route = Const.LOGIN_SCREEN)
 
 
@@ -15,4 +15,8 @@ sealed class Screens(val route:String){
             }
         }
     }
+
+
+
+
 }

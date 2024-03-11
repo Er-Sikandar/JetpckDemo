@@ -3,6 +3,7 @@ package com.example.newjetpackapp.activity
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.core.animateDpAsState
@@ -40,6 +41,7 @@ import com.example.newjetpackapp.utils.Const
 fun LoginScreen(navController: NavController, arguments: Bundle){
     val username = arguments.getString(Const.USER_NAME) ?: Const.EMPTY
     val email = arguments.getString(Const.EMAIL) ?: Const.EMPTY
+    Log.e("TAG", "LoginScreen: "+email)
 
     var expanded by rememberSaveable { mutableStateOf(false) }
     val extraPadding by animateDpAsState(if (expanded) 48.dp else 0.dp)
