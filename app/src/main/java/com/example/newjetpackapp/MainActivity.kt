@@ -1,6 +1,7 @@
 package com.example.newjetpackapp
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -35,58 +36,70 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.newjetpackapp.activity.LoginScreen
 import com.example.newjetpackapp.component.MyCusNav
+import com.example.newjetpackapp.component.NewGetNavHost
 import com.example.newjetpackapp.component.Screens
 import com.example.newjetpackapp.theme.App_color
 import com.example.newjetpackapp.theme.NewJetPackAppTheme
 import com.example.newjetpackapp.utils.Const
 import kotlinx.coroutines.delay
 
+/**
+ *  Sample Google Code
+ * https://github.com/android/compose-samples
+ */
+
 class MainActivity : ComponentActivity() {
-
-//https://github.com/android/compose-samples
-
+    private val TAG="MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             NewJetPackAppTheme {
-                Surface(modifier = Modifier.fillMaxSize()) {
-                    Column(
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        val navController = rememberNavController()
-                        NavGraph(navController = navController,Screens.SplashGo.route)
-
-                    }
-
-                }
+                NewGetNavHost()
             }
         }
 
     }
-
-
 }
+
+
+
+
+
+
+
+
+
 
 @Composable
 fun SplashGo(navController: NavController) {
+    Log.e("TAG", "SplashGo: ")
     MyImage()
     LaunchedEffect(key1 = true) {
         delay(Const.SPLASH_TIME.toLong())
-        navController.navigate(Screens.LoginScreen.route) {
-            launchSingleTop = true
-            popUpTo(navController.graph.startDestinationId) {
-                inclusive = true  //back finish
+        if (true){
+            navController.navigate(Const.HOME_SCREEN) {
+                launchSingleTop = true
+                popUpTo(navController.graph.startDestinationId) {
+                    inclusive = true  //back finish
+                }
+            }
+        }else{
+            navController.navigate(Const.LOGIN_SCREEN) {
+                launchSingleTop = true
+                popUpTo(navController.graph.startDestinationId) {
+                    inclusive = true  //back finish
+                }
             }
         }
+
     }
 }
 
 @Composable
 fun NavGraph(navController: NavHostController,route:String) {
     NavHost(navController, startDestination = route) {
-        composable(route = Screens.SplashGo.route) {
+        composable(route = Screens.SplashScreen.route) {
             SplashGo(navController)
         }
         composable(route = Screens.LoginScreen.route) {
@@ -144,12 +157,16 @@ fun MyInFin() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun GreetingPreview() {
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        //  SplashGo()
-        MyImage()
+    NewJetPackAppTheme {
+        Surface(modifier = Modifier.fillMaxSize()) {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                MyImage()
+            }
+
+        }
     }
     /* Column( modifier = Modifier.fillMaxSize(),
      verticalArrangement =Arrangement.Center,

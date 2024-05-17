@@ -26,7 +26,7 @@ class NewJetPackApplication : Application() {
         context = this
         mInstance = this
       //Todo Firebase init here
-        Log.e(TAG, "onCreate: Pending Firebase Init..")
+      //  Log.e(TAG, "onCreate: Pending Firebase Init..")
     }
 
     override fun onTerminate() {

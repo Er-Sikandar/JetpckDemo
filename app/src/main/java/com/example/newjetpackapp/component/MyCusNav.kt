@@ -5,9 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.example.newjetpackapp.MainActivity
 import com.example.newjetpackapp.SplashGo
+import com.example.newjetpackapp.activity.HomeScreen
 import com.example.newjetpackapp.activity.LoginScreen
 import com.example.newjetpackapp.utils.Const
 
@@ -45,11 +45,11 @@ object MyCusNav{
             composable(Const.SPLASH_GO) {
                 SplashGo(navController = navController)
             }
-            composable(Const.MAIN_SCREEN) {
-                MainActivity()
-            }
             composable(Const.LOGIN_SCREEN) {
                 LoginScreen(navController=navController,arguments=arguments)
+            }
+            composable(Const.HOME_SCREEN) {
+                HomeScreen(navController=navController)
             }
         }
     }
