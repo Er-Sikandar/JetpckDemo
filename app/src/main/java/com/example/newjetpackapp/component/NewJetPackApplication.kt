@@ -8,23 +8,32 @@ class NewJetPackApplication : Application() {
     private val TAG = "NewJetPackApplication"
     companion object {
         const val JETNEWS_APP_URI = "https://github.com/android/compose-samples"
-    }
-    private lateinit var context: Context
-    private lateinit var mInstance: NewJetPackApplication
 
-    fun getAppContext(): Context {
-        return context
-    }
+        /*var appContext: Context? = null
+        private var singleton: NewJetPackApplication? = null
+            get() {
+                if (singleton == null) {
+                    singleton = NewJetPackApplication()
+                }
+                return singleton
+            }*/
 
-    @Synchronized
-    fun getInstance(): NewJetPackApplication {
-        return mInstance
+        private lateinit var appContext: Context
+        private lateinit var singleton: NewJetPackApplication
+
+        fun getAppContext(): Context {
+            return appContext
+        }
+        @Synchronized
+        fun getInstance(): NewJetPackApplication {
+            return singleton
+        }
     }
 
     override fun onCreate() {
         super.onCreate()
-        context = this
-        mInstance = this
+        appContext = this
+        singleton = this
       //Todo Firebase init here
       //  Log.e(TAG, "onCreate: Pending Firebase Init..")
     }

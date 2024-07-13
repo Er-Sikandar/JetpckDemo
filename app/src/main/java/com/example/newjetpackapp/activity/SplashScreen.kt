@@ -37,10 +37,9 @@ import kotlinx.coroutines.delay
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
-fun SplashScreen( onNavigateToLogin: () -> Unit,
-                   onNavigateToHome: () -> Unit){
+fun SplashScreen(onNavigateToLogin: () -> Unit,
+                   onNavigateToHome: () -> Unit) {
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-        NewJetPackAppTheme {
             Surface(modifier = Modifier.fillMaxSize()) {
                 Column( modifier = Modifier.padding(innerPadding),
                     verticalArrangement = Arrangement.Center,
@@ -49,12 +48,10 @@ fun SplashScreen( onNavigateToLogin: () -> Unit,
                     SplashGo()
                 }
             }
-        }
     }
 }
 @Composable
 fun SplashGo() {
-    Log.e("TAG", "SplashGo: ")
     getImage()
     LaunchedEffect(key1 = true) {
         delay(Const.SPLASH_TIME.toLong())
@@ -73,16 +70,14 @@ fun getImage() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun SplashPreview() {
-    NewJetPackAppTheme {
+    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         Surface(modifier = Modifier.fillMaxSize()) {
-            Column(
+            Column(modifier = Modifier.padding(innerPadding),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 getImage()
             }
-
         }
-    }
-
+        }
 }
