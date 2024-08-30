@@ -45,17 +45,25 @@ fun SplashScreen(onNavigateToLogin: () -> Unit,
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    SplashGo()
+                    SplashGo(onNavigateToLogin,onNavigateToHome)
                 }
             }
     }
 }
 @Composable
-fun SplashGo() {
+fun SplashGo(onNavigateToLogin: () -> Unit,
+             onNavigateToHome: () -> Unit) {
     getImage()
     LaunchedEffect(key1 = true) {
         delay(Const.SPLASH_TIME.toLong())
-        Log.e("TAG", "SplashGo:>> ")
+        val isUserLoggedIn = true
+        if (isUserLoggedIn) {
+            onNavigateToLogin()
+            Log.e("TAG", "SplashGo:>> ")
+        }else{
+            onNavigateToHome()
+            Log.e("TAG", "SplashGo Else:>> ")
+        }
     }
 }
 @Composable

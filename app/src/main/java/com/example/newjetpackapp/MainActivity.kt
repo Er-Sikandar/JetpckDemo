@@ -104,7 +104,7 @@ fun NavGraph(navController: NavHostController,route:String) {
         }
         composable(route = Screens.LoginScreen.route) {
             val arguments = bundleOf(Const.USER_NAME to "Developer", Const.EMAIL to "sikandar@example.com")
-            LoginScreen(navController, arguments)
+           // LoginScreen(navController, arguments)
         }
     }
 }

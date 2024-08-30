@@ -39,11 +39,11 @@ import com.example.newjetpackapp.utils.Const
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
-fun LoginScreen(navController: NavController, arguments: Bundle){
+/*fun LoginScreen(navController: NavController, arguments: Bundle){
     val username = arguments.getString(Const.USER_NAME) ?: Const.EMPTY
     val email = arguments.getString(Const.EMAIL) ?: Const.EMPTY
-    Log.e("TAG", "LoginScreen: "+email)
-
+    Log.e("TAG", "LoginScreen: "+email)*/
+fun LoginScreen(onNavigateSignUp: () -> Unit){
     var expanded by rememberSaveable { mutableStateOf(false) }
     val extraPadding by animateDpAsState(if (expanded) 48.dp else 0.dp)
 
@@ -53,14 +53,13 @@ fun LoginScreen(navController: NavController, arguments: Bundle){
                 .weight(1f)
                 .padding(bottom = extraPadding)
             ) {
-                Text(text = "Hello, $username", fontStyle = FontStyle.Normal, fontSize = 18.sp)
+                Text(text = "Hello,", fontStyle = FontStyle.Normal, fontSize = 18.sp)
                 Text(text = "This is test code.", fontSize = 14.sp)
             }
             ElevatedButton(
                 onClick = {
-                    expanded = !expanded
-                      navController.navigate(Const.SPLASH_GO)
-
+                   // expanded = !expanded
+                    onNavigateSignUp()
                 }
             ) {
                 Text(if (expanded) stringResource(R.string.show_less) else stringResource(R.string.show_more))

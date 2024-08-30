@@ -46,7 +46,7 @@ object MyCusNav{
                 SplashGo(navController = navController)
             }
             composable(Const.LOGIN_SCREEN) {
-                LoginScreen(navController=navController,arguments=arguments)
+             //   LoginScreen(navController=navController,arguments=arguments)
             }
             composable(Const.HOME_SCREEN) {
                 HomeScreen(navController=navController)
