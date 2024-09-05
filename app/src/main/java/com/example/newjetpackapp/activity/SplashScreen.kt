@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.newjetpackapp.MyImage
 import com.example.newjetpackapp.R
+import com.example.newjetpackapp.component.AppLogo
 import com.example.newjetpackapp.theme.App_color
 import com.example.newjetpackapp.theme.NewJetPackAppTheme
 import com.example.newjetpackapp.utils.Const
@@ -53,7 +54,7 @@ fun SplashScreen(onNavigateToLogin: () -> Unit,
 @Composable
 fun SplashGo(onNavigateToLogin: () -> Unit,
              onNavigateToHome: () -> Unit) {
-    getImage()
+    AppLogo()
     LaunchedEffect(key1 = true) {
         delay(Const.SPLASH_TIME.toLong())
         val isUserLoggedIn = true
@@ -66,15 +67,7 @@ fun SplashGo(onNavigateToLogin: () -> Unit,
         }
     }
 }
-@Composable
-fun getImage() {
-    Image(
-        painter = painterResource(id = R.drawable.baseline_camera),
-        contentDescription = "Logo",
-        colorFilter = ColorFilter.tint(App_color),
-        modifier = Modifier.size(180.dp)
-    )
-}
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun SplashPreview() {
@@ -84,7 +77,7 @@ private fun SplashPreview() {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                getImage()
+                AppLogo()
             }
         }
         }

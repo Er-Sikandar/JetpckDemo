@@ -1,7 +1,7 @@
 package com.example.newjetpackapp.utils
 
 object Const {
-   const val SPLASH_TIME=5000
+   const val SPLASH_TIME=3000
 
    //Todo Screen Name
    const val SPLASH_GO="splash_go"

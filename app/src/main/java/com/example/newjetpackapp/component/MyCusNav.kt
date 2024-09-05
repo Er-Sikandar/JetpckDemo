@@ -48,8 +48,8 @@ object MyCusNav{
             composable(Const.LOGIN_SCREEN) {
              //   LoginScreen(navController=navController,arguments=arguments)
             }
-            composable(Const.HOME_SCREEN) {
-                HomeScreen(navController=navController)
+            composable(Const.HOME_SCREEN,) {
+               // HomeScreen(navController=navController)
             }
         }
     }

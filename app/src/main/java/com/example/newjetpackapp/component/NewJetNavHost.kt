@@ -1,11 +1,15 @@
 package com.example.newjetpackapp.component
 
+import android.app.Activity
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.newjetpackapp.activity.HomeScreen
 import com.example.newjetpackapp.activity.LoginScreen
+import com.example.newjetpackapp.activity.SignUp
 import com.example.newjetpackapp.activity.SplashScreen
 import com.example.newjetpackapp.component.Destinations.HOME_ROUTE
 import com.example.newjetpackapp.component.Destinations.LOGIN_ROUTE
@@ -27,10 +31,18 @@ fun NewGetNavHost(navController: NavHostController = rememberNavController()) {
         composable(SPLASH_ROUTE) {
             SplashScreen(
               onNavigateToLogin = {
-                  navController.navigate(LOGIN_ROUTE)
+                  navController.navigate(LOGIN_ROUTE){
+                      popUpTo(navController.graph.startDestinationId) {
+                          inclusive = true
+                      }
+                  }
               },
               onNavigateToHome = {
-                  navController.navigate(HOME_ROUTE)
+                  navController.navigate(HOME_ROUTE){
+                      popUpTo(navController.graph.startDestinationId) {
+                          inclusive = true
+                      }
+                  }
               },
           )
         }
@@ -40,16 +52,35 @@ fun NewGetNavHost(navController: NavHostController = rememberNavController()) {
                 onNavigateSignUp = {
                     navController.navigate(SIGNUP_ROUTE)
                 },
+                onNavigateHome = {
+                    navController.navigate(HOME_ROUTE){
+                        popUpTo(navController.graph.startDestinationId) {
+                            inclusive = true
+                        }
+                    }
+                }
             )
         }
         composable(SIGNUP_ROUTE) {
-
-
+            val activity = (LocalContext.current as? Activity)
+            SignUp(
+                onBack={
+                    activity?.onBackPressed()
+               }
+            )
         }
         composable(HOME_ROUTE) {
+            val activity = (LocalContext.current as? Activity)
+            HomeScreen(
 
+
+                onExitApp = {
+                    activity?.finish()
+                }
+            )
 
         }
+
 
 
 

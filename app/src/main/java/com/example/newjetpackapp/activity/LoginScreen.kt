@@ -43,28 +43,39 @@ import com.example.newjetpackapp.utils.Const
     val username = arguments.getString(Const.USER_NAME) ?: Const.EMPTY
     val email = arguments.getString(Const.EMAIL) ?: Const.EMPTY
     Log.e("TAG", "LoginScreen: "+email)*/
-fun LoginScreen(onNavigateSignUp: () -> Unit){
+fun LoginScreen(onNavigateSignUp: () -> Unit,onNavigateHome: () -> Unit){
     var expanded by rememberSaveable { mutableStateOf(false) }
     val extraPadding by animateDpAsState(if (expanded) 48.dp else 0.dp)
 
     Surface(modifier = Modifier.fillMaxSize()) {
-        Row(modifier = Modifier.padding(24.dp)) {
-            Column(modifier = Modifier
-                .weight(1f)
-                .padding(bottom = extraPadding)
-            ) {
-                Text(text = "Hello,", fontStyle = FontStyle.Normal, fontSize = 18.sp)
-                Text(text = "This is test code.", fontSize = 14.sp)
+        Column {
+            Row(modifier = Modifier.padding(24.dp)) {
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(bottom = extraPadding)
+                ) {
+                    Text(text = "Hello,", fontStyle = FontStyle.Normal, fontSize = 18.sp)
+                    Text(text = "This is test code.", fontSize = 14.sp)
+                }
+                ElevatedButton(
+                    onClick = {
+                        // expanded = !expanded
+                        onNavigateHome()
+                    }
+                ) {
+                    Text(if (expanded) stringResource(R.string.show_less) else stringResource(R.string.show_more))
+                }
+
             }
+
             ElevatedButton(
                 onClick = {
-                   // expanded = !expanded
                     onNavigateSignUp()
                 }
             ) {
-                Text(if (expanded) stringResource(R.string.show_less) else stringResource(R.string.show_more))
+                Text(stringResource(R.string.sign_up))
             }
-
         }
 
 
