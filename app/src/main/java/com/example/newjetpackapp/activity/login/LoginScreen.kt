@@ -20,6 +20,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -34,6 +35,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import com.example.newjetpackapp.R
 import com.example.newjetpackapp.component.AppLogo
+import com.example.newjetpackapp.networks.Resource
 import com.example.newjetpackapp.theme.App_color
 import com.example.newjetpackapp.utils.CallFun
 import com.example.newjetpackapp.utils.Dimensions
@@ -45,11 +47,12 @@ import com.example.newjetpackapp.utils.Dimensions
     val username = arguments.getString(Const.USER_NAME) ?: Const.EMPTY
     val email = arguments.getString(Const.EMAIL) ?: Const.EMPTY
     Log.e("TAG", "LoginScreen: "+email)*/
-fun LoginScreen(onNavigateSignUp: () -> Unit,onNavigateHome: () -> Unit){
+fun LoginScreen(onNavigateSignUp: () -> Unit,onNavigateHome: () -> Unit, loginViewModel: LoginViewModel){
   /*  var expanded by rememberSaveable { mutableStateOf(false) }
     val extraPadding by animateDpAsState(if (expanded) 48.dp else 0.dp)*/
     val context = LocalContext.current
     val (textMob, setTextState) = remember { mutableStateOf(TextFieldValue()) }
+    val loginState by loginViewModel.loginState.observeAsState()
 
     Surface(modifier = Modifier.fillMaxSize()) {
         LazyColumn (verticalArrangement = Arrangement.Center,
@@ -83,7 +86,7 @@ fun LoginScreen(onNavigateSignUp: () -> Unit,onNavigateHome: () -> Unit){
                         if (textMob.text.isEmpty()) {
                             CallFun.showShort(context,"Please enter mobile number")
                         }else{
-                            onNavigateHome()
+                            loginViewModel.loginApi(textMob.text)
                         }
                     }
                 ) { Text(stringResource(R.string.login)) }
@@ -96,5 +99,20 @@ fun LoginScreen(onNavigateSignUp: () -> Unit,onNavigateHome: () -> Unit){
             }
         }
     }
-
+    when (val result = loginState) {
+        is Resource.Success -> {
+            CallFun.showLog("TAg","Data: ${result.data.token}")
+            val apiResponse = result.data
+              if (apiResponse.status){
+                  onNavigateHome()
+              }else{
+                  CallFun.showShort(context,"Login failed")
+              }
+        }
+        is Resource.Failure -> {
+            CallFun.showShort(context, result.exception.message ?: "Login failed")
+        }
+        else -> {
+        }
+    }
 }

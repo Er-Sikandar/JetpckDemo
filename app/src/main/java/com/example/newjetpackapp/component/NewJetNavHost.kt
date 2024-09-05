@@ -3,6 +3,7 @@ package com.example.newjetpackapp.component
 import android.app.Activity
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -11,6 +12,7 @@ import com.example.newjetpackapp.activity.HomeScreen
 import com.example.newjetpackapp.activity.login.LoginScreen
 import com.example.newjetpackapp.activity.SignUp
 import com.example.newjetpackapp.activity.SplashScreen
+import com.example.newjetpackapp.activity.login.LoginViewModel
 import com.example.newjetpackapp.component.Destinations.HOME_ROUTE
 import com.example.newjetpackapp.component.Destinations.LOGIN_ROUTE
 import com.example.newjetpackapp.component.Destinations.SIGNUP_ROUTE
@@ -47,6 +49,7 @@ fun NewGetNavHost(navController: NavHostController = rememberNavController()) {
         }
 
         composable(LOGIN_ROUTE) {
+            val loginViewModel: LoginViewModel = viewModel()
             LoginScreen(
                 onNavigateSignUp = {
                     navController.navigate(SIGNUP_ROUTE)
@@ -57,8 +60,8 @@ fun NewGetNavHost(navController: NavHostController = rememberNavController()) {
                             inclusive = true
                         }
                     }
-                }
-
+                },
+                loginViewModel
             )
         }
         composable(SIGNUP_ROUTE) {

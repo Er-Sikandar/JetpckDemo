@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object ApiClient {
-    const val BASE_URL = "https://hvfchbdnv.com/eapis/"
+    const val BASE_URL = "https://reqres.in/"
 
     @SuppressLint("SuspiciousIndentation")
     fun getInstance():ApiService{
