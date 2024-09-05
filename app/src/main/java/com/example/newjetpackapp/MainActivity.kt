@@ -33,9 +33,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.example.newjetpackapp.activity.LoginScreen
-import com.example.newjetpackapp.component.MyCusNav
 import com.example.newjetpackapp.component.NewGetNavHost
 import com.example.newjetpackapp.component.Screens
 import com.example.newjetpackapp.theme.App_color

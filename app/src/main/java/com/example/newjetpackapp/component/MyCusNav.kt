@@ -5,10 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.newjetpackapp.MainActivity
 import com.example.newjetpackapp.SplashGo
-import com.example.newjetpackapp.activity.HomeScreen
-import com.example.newjetpackapp.activity.LoginScreen
 import com.example.newjetpackapp.utils.Const
 
 

@@ -8,14 +8,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.newjetpackapp.activity.HomeScreen
-import com.example.newjetpackapp.activity.LoginScreen
+import com.example.newjetpackapp.activity.login.LoginScreen
 import com.example.newjetpackapp.activity.SignUp
 import com.example.newjetpackapp.activity.SplashScreen
 import com.example.newjetpackapp.component.Destinations.HOME_ROUTE
 import com.example.newjetpackapp.component.Destinations.LOGIN_ROUTE
 import com.example.newjetpackapp.component.Destinations.SIGNUP_ROUTE
 import com.example.newjetpackapp.component.Destinations.SPLASH_ROUTE
-import com.example.newjetpackapp.routes.SplashRoute
 
 object Destinations {
     const val SPLASH_ROUTE = "splash"
@@ -59,6 +58,7 @@ fun NewGetNavHost(navController: NavHostController = rememberNavController()) {
                         }
                     }
                 }
+
             )
         }
         composable(SIGNUP_ROUTE) {

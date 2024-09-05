@@ -46,6 +46,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.example.newjetpackapp.R
 import com.example.newjetpackapp.component.AppLogo
@@ -58,7 +59,7 @@ import com.example.newjetpackapp.utils.Dimensions
 fun SignUp(onBack:()->Unit){
     val context = LocalContext.current
     var textName by remember { mutableStateOf("") }
-    var textMob by remember { mutableStateOf("") }
+    val (textMob, setTextState) = remember { mutableStateOf(TextFieldValue()) }
     var textEmail by remember { mutableStateOf("") }
 
     Surface(modifier = Modifier.fillMaxSize()) {
@@ -85,8 +86,10 @@ fun SignUp(onBack:()->Unit){
             OutlinedTextField(modifier = Modifier.fillMaxWidth(),
                 value = textMob,
                 leadingIcon = { Icon(imageVector = Icons.Default.Call, contentDescription = "callIcon") },
-                onValueChange = {
-                    textMob = it
+                onValueChange = { newValue->
+                    if (newValue.text.length <= 10) {
+                        setTextState(newValue)
+                    }
                 },
                 singleLine = true,
                 label = { Text("Enter Mobile Number Here..") },
@@ -119,7 +122,7 @@ fun SignUp(onBack:()->Unit){
                     onClick = {
                         if (textName.isEmpty()) {
                         CallFun.showShort(context,"Please enter name")
-                        }else if (textMob.isEmpty()){
+                        }else if (textMob.text.isEmpty()){
                             CallFun.showShort(context,"Please enter mobile number")
                         }else if (textEmail.isEmpty()){
                             CallFun.showShort(context,"Please enter email id")
