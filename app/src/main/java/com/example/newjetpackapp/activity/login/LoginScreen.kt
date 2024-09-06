@@ -1,6 +1,7 @@
 package com.example.newjetpackapp.activity.login
 
 import android.annotation.SuppressLint
+import android.text.TextUtils
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -13,6 +14,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -33,12 +35,15 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.TextUnit
 import com.example.newjetpackapp.R
 import com.example.newjetpackapp.component.AppLogo
 import com.example.newjetpackapp.networks.Resource
 import com.example.newjetpackapp.theme.App_color
 import com.example.newjetpackapp.utils.CallFun
+import com.example.newjetpackapp.utils.Const
 import com.example.newjetpackapp.utils.Dimensions
+import com.example.newjetpackapp.utils.Prefs
 
 
 @SuppressLint("SuspiciousIndentation")
@@ -53,6 +58,8 @@ fun LoginScreen(onNavigateSignUp: () -> Unit,onNavigateHome: () -> Unit, loginVi
     val context = LocalContext.current
     val (textMob, setTextState) = remember { mutableStateOf(TextFieldValue()) }
     val loginState by loginViewModel.loginState.observeAsState()
+    var isLoading by remember { mutableStateOf(false) }
+
 
     Surface(modifier = Modifier.fillMaxSize()) {
         LazyColumn (verticalArrangement = Arrangement.Center,
@@ -78,18 +85,25 @@ fun LoginScreen(onNavigateSignUp: () -> Unit,onNavigateHome: () -> Unit, loginVi
                     )
                 )
                 Spacer(modifier = Modifier.height(Dimensions.dp60))
-                ElevatedButton(modifier = Modifier.fillMaxWidth(), colors = ButtonDefaults.buttonColors(
+                ElevatedButton(modifier = Modifier.fillMaxWidth().height(Dimensions.dp45),
+                    enabled = !isLoading,
+                    colors = ButtonDefaults.buttonColors(
                     containerColor = App_color,
                     contentColor = Color.White
                 ),
-                    onClick = {
+                onClick = {
                         if (textMob.text.isEmpty()) {
                             CallFun.showShort(context,"Please enter mobile number")
+                        }else if (textMob.text.trim().length<10) {
+                            CallFun.showShort(context,"Please enter valid mobile number")
                         }else{
+                            isLoading = true
                             loginViewModel.loginApi(textMob.text)
                         }
                     }
-                ) { Text(stringResource(R.string.login)) }
+                ) {
+                    Text(stringResource(R.string.login))
+                 }
                 Spacer(modifier = Modifier.height(Dimensions.dp20))
                 Text(modifier = Modifier.clickable {
                     onNavigateSignUp()
@@ -103,8 +117,8 @@ fun LoginScreen(onNavigateSignUp: () -> Unit,onNavigateHome: () -> Unit, loginVi
         is Resource.Success -> {
             CallFun.showLog("TAg","Data: ${result.data.token}")
             val apiResponse = result.data
-              if (apiResponse.status){
-                  onNavigateHome()
+              if (!TextUtils.isEmpty(apiResponse.token)){
+                // onNavigateHome()
               }else{
                   CallFun.showShort(context,"Login failed")
               }

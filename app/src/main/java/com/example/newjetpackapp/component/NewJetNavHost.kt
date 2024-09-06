@@ -17,6 +17,8 @@ import com.example.newjetpackapp.component.Destinations.HOME_ROUTE
 import com.example.newjetpackapp.component.Destinations.LOGIN_ROUTE
 import com.example.newjetpackapp.component.Destinations.SIGNUP_ROUTE
 import com.example.newjetpackapp.component.Destinations.SPLASH_ROUTE
+import com.example.newjetpackapp.utils.Const
+import com.example.newjetpackapp.utils.Prefs
 
 object Destinations {
     const val SPLASH_ROUTE = "splash"
@@ -55,6 +57,7 @@ fun NewGetNavHost(navController: NavHostController = rememberNavController()) {
                     navController.navigate(SIGNUP_ROUTE)
                 },
                 onNavigateHome = {
+                    Prefs.getInstance().setPrefsBoolean(Const.TOKEN,true)
                     navController.navigate(HOME_ROUTE){
                         popUpTo(navController.graph.startDestinationId) {
                             inclusive = true
@@ -76,7 +79,14 @@ fun NewGetNavHost(navController: NavHostController = rememberNavController()) {
             val activity = (LocalContext.current as? Activity)
             HomeScreen(
 
-
+                onNavigateToLogin = {
+                    Prefs.getInstance().setPrefsBoolean(Const.TOKEN,false)
+                    navController.navigate(LOGIN_ROUTE){
+                        popUpTo(navController.graph.startDestinationId) {
+                            inclusive = true
+                        }
+                    }
+                },
                 onExitApp = {
                     activity?.finish()
                 }

@@ -33,6 +33,7 @@ import com.example.newjetpackapp.component.AppLogo
 import com.example.newjetpackapp.theme.App_color
 import com.example.newjetpackapp.theme.NewJetPackAppTheme
 import com.example.newjetpackapp.utils.Const
+import com.example.newjetpackapp.utils.Prefs
 import kotlinx.coroutines.delay
 
 
@@ -57,12 +58,12 @@ fun SplashGo(onNavigateToLogin: () -> Unit,
     AppLogo()
     LaunchedEffect(key1 = true) {
         delay(Const.SPLASH_TIME.toLong())
-        val isUserLoggedIn = true
+        val isUserLoggedIn = Prefs.getInstance().getPrefsBoolean(Const.TOKEN)
         if (isUserLoggedIn) {
-            onNavigateToLogin()
+            onNavigateToHome()
             Log.e("TAG", "SplashGo:>> ")
         }else{
-            onNavigateToHome()
+            onNavigateToLogin()
             Log.e("TAG", "SplashGo Else:>> ")
         }
     }
