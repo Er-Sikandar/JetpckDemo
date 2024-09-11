@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NewJetPackApp</string>
+    <string name="app_name">JetPackApp</string>
     <string name="next">Next</string>
     <string name="show_less">Show less</string>
     <string name="show_more">Show more</string>
@@ -8,7 +8,8 @@
     <string name="submit">Submit</string>
     <string name="login">Login</string>
     <string name="sign_up_here">Do you have account? Sign Up Hare</string>
-
+    <string name="please_enter_mobile_number">Please enter mobile number</string>
+    <string name="please_enter_valid_mobile_number">Please enter valid mobile number</string>
 
 
 </resources>

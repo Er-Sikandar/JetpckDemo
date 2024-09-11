@@ -45,7 +45,6 @@ import com.example.newjetpackapp.utils.Const
 import com.example.newjetpackapp.utils.Dimensions
 import com.example.newjetpackapp.utils.Prefs
 
-
 @SuppressLint("SuspiciousIndentation")
 @Composable
 /*fun LoginScreen(navController: NavController, arguments: Bundle){
@@ -85,7 +84,9 @@ fun LoginScreen(onNavigateSignUp: () -> Unit,onNavigateHome: () -> Unit, loginVi
                     )
                 )
                 Spacer(modifier = Modifier.height(Dimensions.dp60))
-                ElevatedButton(modifier = Modifier.fillMaxWidth().height(Dimensions.dp45),
+                ElevatedButton(modifier = Modifier
+                    .fillMaxWidth()
+                    .height(Dimensions.dp45),
                     enabled = !isLoading,
                     colors = ButtonDefaults.buttonColors(
                     containerColor = App_color,
@@ -93,12 +94,12 @@ fun LoginScreen(onNavigateSignUp: () -> Unit,onNavigateHome: () -> Unit, loginVi
                 ),
                 onClick = {
                         if (textMob.text.isEmpty()) {
-                            CallFun.showShort(context,"Please enter mobile number")
+                            CallFun.showShort(context, context.resources.getString(R.string.please_enter_mobile_number))
                         }else if (textMob.text.trim().length<10) {
-                            CallFun.showShort(context,"Please enter valid mobile number")
+                            CallFun.showShort(context, context.resources.getString(R.string.please_enter_valid_mobile_number))
                         }else{
                             isLoading = true
-                            loginViewModel.loginApi(textMob.text)
+                           loginViewModel.loginApi(textMob.text)
                         }
                     }
                 ) {

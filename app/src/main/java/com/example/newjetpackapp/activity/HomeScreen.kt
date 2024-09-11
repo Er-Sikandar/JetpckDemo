@@ -24,7 +24,7 @@ import com.example.newjetpackapp.utils.Const
 import com.example.newjetpackapp.utils.Prefs
 import kotlinx.coroutines.delay
 @Composable
-fun HomeScreen(onNavigateToLogin:()->Unit,onExitApp: () -> Unit){
+fun HomeScreen(onNavigateHomeToLogin:()->Unit,onExitApp: () -> Unit){
     var doubleBackToExitPressedOnce by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
@@ -36,7 +36,7 @@ fun HomeScreen(onNavigateToLogin:()->Unit,onExitApp: () -> Unit){
         ) {
             ElevatedButton(
                 onClick = {
-                    onNavigateToLogin()
+                    onNavigateHomeToLogin()
                    val args = bundleOf(Const.USER_NAME to "Developer", Const.EMAIL to "sikandar@example.com")
 
                    // navController.currentBackStackEntry?.arguments = args
