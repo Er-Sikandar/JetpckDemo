@@ -9,12 +9,16 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.newjetpackapp.activity.HomeScreen
+import com.example.newjetpackapp.activity.ProfileScreen
+import com.example.newjetpackapp.activity.SettingsScreen
 import com.example.newjetpackapp.activity.login.LoginScreen
 import com.example.newjetpackapp.activity.SignUp
 import com.example.newjetpackapp.activity.SplashScreen
 import com.example.newjetpackapp.activity.login.LoginViewModel
 import com.example.newjetpackapp.component.Destinations.HOME_ROUTE
 import com.example.newjetpackapp.component.Destinations.LOGIN_ROUTE
+import com.example.newjetpackapp.component.Destinations.PROFILE_ROUTE
+import com.example.newjetpackapp.component.Destinations.SETTINGS_ROUTE
 import com.example.newjetpackapp.component.Destinations.SIGNUP_ROUTE
 import com.example.newjetpackapp.component.Destinations.SPLASH_ROUTE
 import com.example.newjetpackapp.utils.Const
@@ -25,6 +29,8 @@ object Destinations {
     const val LOGIN_ROUTE = "login"
     const val HOME_ROUTE = "home"
     const val SIGNUP_ROUTE = "signup"
+    const val PROFILE_ROUTE = "profile"
+    const val SETTINGS_ROUTE = "settings"
 
 }
 
@@ -77,6 +83,13 @@ fun NewGetNavHost(navController: NavHostController = rememberNavController()) {
         composable(HOME_ROUTE) {
             val activity = (LocalContext.current as? Activity)
             HomeScreen(
+                onNavHomeToProfile = {
+                    navController.navigate(PROFILE_ROUTE)
+                },
+                onNavHomeToSettings = {
+                    navController.navigate(SETTINGS_ROUTE)
+                },
+
                 onNavigateHomeToLogin = {
                     navController.navigate(LOGIN_ROUTE){
                         popUpTo(navController.graph.startDestinationId) {
@@ -89,9 +102,22 @@ fun NewGetNavHost(navController: NavHostController = rememberNavController()) {
                     activity?.finish()
                 }
             )
-
+        }
+        composable(PROFILE_ROUTE) {
+            ProfileScreen(
+                onBackToHome = {
+                    navController.popBackStack()
+                }
+            )
         }
 
+        composable(SETTINGS_ROUTE) {
+            SettingsScreen(
+                onBackToHome = {
+                    navController.popBackStack()
+                }
+            )
+        }
 
 
 
