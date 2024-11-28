@@ -76,13 +76,17 @@ fun NewGetNavHost(navController: NavHostController = rememberNavController()) {
             val activity = (LocalContext.current as? Activity)
             SignUp(
                 onBack={
+                    navController.popBackStack()
+                    /*
                     activity?.onBackPressed()
+                    */
                }
             )
         }
         composable(HOME_ROUTE) {
             val activity = (LocalContext.current as? Activity)
             HomeScreen(
+                navController,
                 onNavHomeToProfile = {
                     navController.navigate(PROFILE_ROUTE)
                 },
