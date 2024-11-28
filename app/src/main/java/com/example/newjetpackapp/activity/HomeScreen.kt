@@ -28,7 +28,6 @@ fun HomeScreen(onNavigateHomeToLogin:()->Unit,onExitApp: () -> Unit){
     var doubleBackToExitPressedOnce by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
-
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(
             verticalArrangement = Arrangement.Center,
@@ -36,19 +35,11 @@ fun HomeScreen(onNavigateHomeToLogin:()->Unit,onExitApp: () -> Unit){
         ) {
             ElevatedButton(
                 onClick = {
+                    Prefs.getInstance().logout()
                     onNavigateHomeToLogin()
-                   val args = bundleOf(Const.USER_NAME to "Developer", Const.EMAIL to "sikandar@example.com")
-
-                   // navController.currentBackStackEntry?.arguments = args
-
-                  //  navController.navigate(Const.LOGIN_SCREEN)
-
-
-
-
                 }
             ) {
-                Text(stringResource(R.string.home))
+                Text(stringResource(R.string.clear_data))
             }
 
 

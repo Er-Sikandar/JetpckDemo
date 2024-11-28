@@ -57,7 +57,6 @@ fun NewGetNavHost(navController: NavHostController = rememberNavController()) {
                     navController.navigate(SIGNUP_ROUTE)
                 },
                 onNavigateHome = {
-                    Prefs.getInstance().setPrefsBoolean(Const.TOKEN, false)
                     navController.navigate(HOME_ROUTE){
                         popUpTo(navController.graph.startDestinationId) {
                             inclusive = true
@@ -78,13 +77,12 @@ fun NewGetNavHost(navController: NavHostController = rememberNavController()) {
         composable(HOME_ROUTE) {
             val activity = (LocalContext.current as? Activity)
             HomeScreen(
-
                 onNavigateHomeToLogin = {
-                    Prefs.getInstance().setPrefsBoolean(Const.TOKEN,false)
                     navController.navigate(LOGIN_ROUTE){
                         popUpTo(navController.graph.startDestinationId) {
                             inclusive = true
                         }
+                        launchSingleTop = true
                     }
                 },
                 onExitApp = {

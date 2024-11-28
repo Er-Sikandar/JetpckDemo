@@ -15,6 +15,7 @@ object Const {
    const val EMAIL="email"
    const val MOBILE_NO="mobile_no"
    const val TOKEN="token"
+   const val IS_LOGIN="is_login"
    const val EMPTY=""
 
 

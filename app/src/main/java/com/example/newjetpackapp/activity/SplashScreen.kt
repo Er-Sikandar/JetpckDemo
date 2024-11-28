@@ -58,10 +58,10 @@ fun SplashGo(onNavigateToLogin: () -> Unit,
     AppLogo()
     LaunchedEffect(key1 = true) {
         delay(Const.SPLASH_TIME.toLong())
-        val isUserLoggedIn = Prefs.getInstance().getPrefsBoolean(Const.TOKEN)
+        val isUserLoggedIn = Prefs.getInstance().getPrefsBoolean(Const.IS_LOGIN)
         if (isUserLoggedIn) {
             onNavigateToHome()
-            Log.e("TAG", "SplashGo:>> ")
+            Log.e("TAG", "SplashGo:>> Home")
         }else{
             onNavigateToLogin()
             Log.e("TAG", "SplashGo Else:>> ")

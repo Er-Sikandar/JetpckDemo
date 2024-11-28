@@ -1,7 +1,11 @@
 package com.example.newjetpackapp.activity.login
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.text.TextUtils
+import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -36,6 +40,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat.startActivity
+import com.example.newjetpackapp.MainActivity
 import com.example.newjetpackapp.R
 import com.example.newjetpackapp.component.AppLogo
 import com.example.newjetpackapp.networks.Resource
@@ -56,9 +63,33 @@ fun LoginScreen(onNavigateSignUp: () -> Unit,onNavigateHome: () -> Unit, loginVi
     val extraPadding by animateDpAsState(if (expanded) 48.dp else 0.dp)*/
     val context = LocalContext.current
     val (textMob, setTextState) = remember { mutableStateOf(TextFieldValue()) }
-    val loginState by loginViewModel.loginState.observeAsState()
+   // val loginState by loginViewModel.loginState.observeAsState()
+    val loginState by loginViewModel.loginState.observeAsState(Resource.Idle)
     var isLoading by remember { mutableStateOf(false) }
 
+    when (val result = loginState) {
+        is Resource.Loading -> {
+            Text(text = "Loading...")
+        }
+        is Resource.Success -> {
+            loginViewModel.resetLoginState()
+            CallFun.showLog("TAg","Data: ${result.data.token}")
+            val apiResponse = result.data
+            if (!TextUtils.isEmpty(apiResponse.token)){
+                Prefs.getInstance().setPrefsBoolean(Const.IS_LOGIN,true)
+                onNavigateHome()
+            }else{
+                CallFun.showShort(context,"Login failed")
+            }
+        }
+        is Resource.Failure -> {
+            loginViewModel.resetLoginState()
+            CallFun.showShort(context, result.exception.message ?: "Login failed")
+        }
+        is Resource.Idle -> {
+            Log.e("TAG", "LoginScreen: Idle")
+        }
+    }
 
     Surface(modifier = Modifier.fillMaxSize()) {
         LazyColumn (verticalArrangement = Arrangement.Center,
@@ -114,20 +145,10 @@ fun LoginScreen(onNavigateSignUp: () -> Unit,onNavigateHome: () -> Unit, loginVi
             }
         }
     }
-    when (val result = loginState) {
-        is Resource.Success -> {
-            CallFun.showLog("TAg","Data: ${result.data.token}")
-            val apiResponse = result.data
-              if (!TextUtils.isEmpty(apiResponse.token)){
-                // onNavigateHome()
-              }else{
-                  CallFun.showShort(context,"Login failed")
-              }
-        }
-        is Resource.Failure -> {
-            CallFun.showShort(context, result.exception.message ?: "Login failed")
-        }
-        else -> {
+
+    BackHandler {
+        if (!Prefs.getInstance().getPrefsBoolean(Const.IS_LOGIN)) {
+            (context as? Activity)?.finish() // Exit the app
         }
     }
 }

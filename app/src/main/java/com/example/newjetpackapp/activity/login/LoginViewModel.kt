@@ -17,7 +17,8 @@ class LoginViewModel: ViewModel() {
     val loginState: LiveData<Resource<ApiResponse>> get() = _loginState
 
      fun loginApi(mobileNumber: String) {
-        val param: MutableMap<String, String> = HashMap()
+         _loginState.value = Resource.Loading
+         val param: MutableMap<String, String> = HashMap()
          // param[Const.MOBILE_NO] = mobileNumber.trim()
           param["email"] = "eve.holt@reqres.in"
           param["password"] = "cityslicka"
@@ -27,13 +28,16 @@ class LoginViewModel: ViewModel() {
                 if (response.isSuccessful) {
                     _loginState.value = Resource.Success(response.body()!!)
                 } else {
-                    _loginState.value = Resource.Failure(Exception("Login failed with code ${response.code()}"))
+                    _loginState.value = Resource.Failure(Exception("Login failed with code: ${response.code()}"))
                 }
             }
             override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
                 _loginState.value = Resource.Failure(t)
             }
         })
+    }
+    fun resetLoginState() {
+        _loginState.value = Resource.Idle
     }
 
 }
