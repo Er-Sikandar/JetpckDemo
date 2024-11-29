@@ -63,7 +63,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavHostController,onNavHomeToHome:()->Unit,onNavHomeToProfile:()->Unit, onNavHomeToSettings:()->Unit, onNavigateHomeToLogin:()->Unit, onExitApp: () -> Unit){
+fun HomeScreen(navController: NavHostController,onNavHomeToHome:()->Unit,onNavHomeToProfile:()->Unit, onNavHomeToSettings:()->Unit, onNavigateHomeToLogin:()->Unit,onNavHomeToNoty:()->Unit, onExitApp: () -> Unit){
     var doubleBackToExitPressedOnce by remember { mutableStateOf(false) }
     val context = LocalContext.current
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -116,7 +116,7 @@ fun HomeScreen(navController: NavHostController,onNavHomeToHome:()->Unit,onNavHo
                         },
                         actions = {
                             IconButton(onClick = {
-                                Toast.makeText(context, "Notifications", Toast.LENGTH_SHORT).show()
+                                onNavHomeToNoty()
                             }) {
                                 Icon(Icons.Filled.Notifications,tint = Primary_color, contentDescription = null)
                             }

@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.newjetpackapp.activity.HomeScreen
 import com.example.newjetpackapp.activity.HomeToHomeScreen
+import com.example.newjetpackapp.activity.NotyScreen
 import com.example.newjetpackapp.activity.ProfileScreen
 import com.example.newjetpackapp.activity.SettingsScreen
 import com.example.newjetpackapp.activity.login.LoginScreen
@@ -19,6 +20,7 @@ import com.example.newjetpackapp.activity.login.LoginViewModel
 import com.example.newjetpackapp.component.Destinations.HOME_ROUTE
 import com.example.newjetpackapp.component.Destinations.HOME_TO_HOME_ROUTE
 import com.example.newjetpackapp.component.Destinations.LOGIN_ROUTE
+import com.example.newjetpackapp.component.Destinations.NOTIFICATIONS_ROUTE
 import com.example.newjetpackapp.component.Destinations.PROFILE_ROUTE
 import com.example.newjetpackapp.component.Destinations.SETTINGS_ROUTE
 import com.example.newjetpackapp.component.Destinations.SIGNUP_ROUTE
@@ -34,6 +36,7 @@ object Destinations {
     const val HOME_TO_HOME_ROUTE = "home_to_home"
     const val PROFILE_ROUTE = "profile"
     const val SETTINGS_ROUTE = "settings"
+    const val NOTIFICATIONS_ROUTE = "notifications"
 
 }
 
@@ -108,6 +111,9 @@ fun NewGetNavHost(navController: NavHostController = rememberNavController()) {
                         launchSingleTop = true
                     }
                 },
+                onNavHomeToNoty={
+                    navController.navigate(NOTIFICATIONS_ROUTE)
+                },
                 onExitApp = {
                     activity?.finish()
                 }
@@ -130,6 +136,13 @@ fun NewGetNavHost(navController: NavHostController = rememberNavController()) {
 
         composable(SETTINGS_ROUTE) {
             SettingsScreen(
+                onBackToHome = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        composable(NOTIFICATIONS_ROUTE) {
+            NotyScreen(
                 onBackToHome = {
                     navController.popBackStack()
                 }
