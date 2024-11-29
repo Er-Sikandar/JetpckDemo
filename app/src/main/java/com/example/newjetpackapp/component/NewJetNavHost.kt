@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.newjetpackapp.activity.HomeScreen
+import com.example.newjetpackapp.activity.HomeToHomeScreen
 import com.example.newjetpackapp.activity.ProfileScreen
 import com.example.newjetpackapp.activity.SettingsScreen
 import com.example.newjetpackapp.activity.login.LoginScreen
@@ -16,6 +17,7 @@ import com.example.newjetpackapp.activity.SignUp
 import com.example.newjetpackapp.activity.SplashScreen
 import com.example.newjetpackapp.activity.login.LoginViewModel
 import com.example.newjetpackapp.component.Destinations.HOME_ROUTE
+import com.example.newjetpackapp.component.Destinations.HOME_TO_HOME_ROUTE
 import com.example.newjetpackapp.component.Destinations.LOGIN_ROUTE
 import com.example.newjetpackapp.component.Destinations.PROFILE_ROUTE
 import com.example.newjetpackapp.component.Destinations.SETTINGS_ROUTE
@@ -27,8 +29,9 @@ import com.example.newjetpackapp.utils.Prefs
 object Destinations {
     const val SPLASH_ROUTE = "splash"
     const val LOGIN_ROUTE = "login"
-    const val HOME_ROUTE = "home"
     const val SIGNUP_ROUTE = "signup"
+    const val HOME_ROUTE = "home"
+    const val HOME_TO_HOME_ROUTE = "home_to_home"
     const val PROFILE_ROUTE = "profile"
     const val SETTINGS_ROUTE = "settings"
 
@@ -87,6 +90,9 @@ fun NewGetNavHost(navController: NavHostController = rememberNavController()) {
             val activity = (LocalContext.current as? Activity)
             HomeScreen(
                 navController,
+                onNavHomeToHome = {
+                    navController.navigate(HOME_TO_HOME_ROUTE)
+                },
                 onNavHomeToProfile = {
                     navController.navigate(PROFILE_ROUTE)
                 },
@@ -104,6 +110,13 @@ fun NewGetNavHost(navController: NavHostController = rememberNavController()) {
                 },
                 onExitApp = {
                     activity?.finish()
+                }
+            )
+        }
+        composable(HOME_TO_HOME_ROUTE) {
+            HomeToHomeScreen(
+                onBackToHome = {
+                    navController.popBackStack()
                 }
             )
         }

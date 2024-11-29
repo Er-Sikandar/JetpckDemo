@@ -9,11 +9,7 @@ import androidx.navigation.NavHostController
 
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
-    val items = listOf(
-        BottomNavItem.Home,
-        BottomNavItem.Profile,
-        BottomNavItem.Settings
-    )
+    val items = listOf(BottomNavItem.HomeToHome, BottomNavItem.Profile, BottomNavItem.Settings)
     NavigationBar {
         val currentRoute = navController.currentBackStackEntry?.destination?.route
         items.forEach { item ->

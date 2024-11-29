@@ -70,7 +70,7 @@ fun DrawerContent(onProClick:()->Unit,onItemClick: (String) -> Unit) {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    items(15) { index ->
+                    items(8) { index ->
                         DrawerItem(
                             title = "Item ${index + 1}",
                             icon = Icons.Filled.KeyboardArrowUp,
