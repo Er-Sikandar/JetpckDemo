@@ -67,10 +67,15 @@ fun HomeScreen(navController: NavHostController,onNavHomeToProfile:()->Unit, onN
         drawerState = drawerState,
         drawerContent = {
             Box(modifier = Modifier.fillMaxWidth(0.7f).fillMaxHeight()
-                .clip(RoundedCornerShape(topEnd = 16.dp, bottomEnd = 16.dp))
+                .clip(RoundedCornerShape(topEnd = 12.dp, bottomEnd = 12.dp))
                 .background(MaterialTheme.colorScheme.surface)
             ) {
-                DrawerContent()
+                DrawerContent(onItemClick = { item ->
+                    println("Clicked on Drawer: $item")
+                    coroutineScope.launch {
+                        drawerState.close()
+                    }
+                })
             }
         },
         content = {
@@ -96,9 +101,7 @@ fun HomeScreen(navController: NavHostController,onNavHomeToProfile:()->Unit, onN
                         },
                         actions = {
                             IconButton(onClick = {
-                                /*
-                    handle action notification
-                    */
+                                Toast.makeText(context, "Notifications", Toast.LENGTH_SHORT).show()
                             }) {
                                 Icon(Icons.Filled.Notifications, contentDescription = null)
                             }
