@@ -66,7 +66,7 @@ fun SignUp(onBack:()->Unit){
         LazyColumn(verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally, contentPadding = PaddingValues(Dimensions.dp10)
         ) { item {
-            AppLogo()
+            AppLogo(180.dp)
             Spacer(modifier = Modifier.height(Dimensions.dp20))
             OutlinedTextField(modifier = Modifier.fillMaxWidth(),
                 value = textName,

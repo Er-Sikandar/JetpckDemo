@@ -13,6 +13,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.newjetpackapp.component.AppLogo
 import com.example.newjetpackapp.utils.Const
 import com.example.newjetpackapp.utils.Prefs
@@ -37,7 +38,7 @@ fun SplashScreen(onNavigateToLogin: () -> Unit,
 @Composable
 fun SplashGo(onNavigateToLogin: () -> Unit,
              onNavigateToHome: () -> Unit) {
-    AppLogo()
+    AppLogo(180.dp)
     LaunchedEffect(key1 = true) {
         delay(Const.SPLASH_TIME.toLong())
         val isUserLoggedIn = Prefs.getInstance().getPrefsBoolean(Const.IS_LOGIN)
@@ -60,7 +61,7 @@ private fun SplashPreview() {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                AppLogo()
+                AppLogo(180.dp)
             }
         }
         }

@@ -51,12 +51,7 @@ fun DrawerContent(onProClick:()->Unit,onItemClick: (String) -> Unit) {
                         }.padding(10.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.baseline_camera),
-                        contentDescription = "Logo",
-                        colorFilter = ColorFilter.tint(App_color),
-                        modifier = Modifier.size(120.dp)
-                    )
+                    AppLogo(120.dp)
                     Text("sikandar@gmail.com", style = MaterialTheme.typography.bodyLarge)
                     Spacer(modifier = Modifier.height(5.dp))
                     Text("+918601854014", style = MaterialTheme.typography.bodyMedium)

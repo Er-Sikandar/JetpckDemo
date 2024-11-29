@@ -40,6 +40,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat.startActivity
 import com.example.newjetpackapp.MainActivity
@@ -96,7 +97,7 @@ fun LoginScreen(onNavigateSignUp: () -> Unit,onNavigateHome: () -> Unit, loginVi
             horizontalAlignment = Alignment.CenterHorizontally, contentPadding = PaddingValues(Dimensions.dp10)
         ) {
             item {
-                AppLogo()
+                AppLogo(180.dp)
                 Spacer(modifier = Modifier.height(Dimensions.dp20))
                 OutlinedTextField(modifier = Modifier.fillMaxWidth(),
                     value = textMob,
