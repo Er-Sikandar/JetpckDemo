@@ -70,8 +70,15 @@ fun HomeScreen(navController: NavHostController,onNavHomeToProfile:()->Unit, onN
                 .clip(RoundedCornerShape(topEnd = 12.dp, bottomEnd = 12.dp))
                 .background(MaterialTheme.colorScheme.surface)
             ) {
-                DrawerContent(onItemClick = { item ->
+                DrawerContent(
+                    onProClick={
+                     onNavHomeToProfile()
+                     coroutineScope.launch {
+                            drawerState.close()
+                     }
+                },onItemClick = { item ->
                     println("Clicked on Drawer: $item")
+                    Toast.makeText(context, "Clicked: $item", Toast.LENGTH_SHORT).show()
                     coroutineScope.launch {
                         drawerState.close()
                     }
@@ -87,7 +94,7 @@ fun HomeScreen(navController: NavHostController,onNavHomeToProfile:()->Unit, onN
                                 modifier = Modifier.fillMaxWidth(),
                                 contentAlignment = Alignment.Center
                             ) {
-                                Text("Home")
+                                Text("New JetPack App")
                             }
                         },
                         navigationIcon = {

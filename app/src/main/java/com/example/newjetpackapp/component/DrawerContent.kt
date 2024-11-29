@@ -16,13 +16,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.BottomCenter
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
@@ -34,66 +35,73 @@ import com.example.newjetpackapp.R
 import com.example.newjetpackapp.theme.App_color
 
 @Composable
-fun DrawerContent(onItemClick: (String) -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxHeight()
-            .fillMaxWidth()
-    ) {
-        Column {
+fun DrawerContent(onProClick:()->Unit,onItemClick: (String) -> Unit) {
+    Scaffold(
+        content = { paddingValues ->
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                    .fillMaxSize()
+                    .padding(paddingValues)
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.baseline_camera),
-                    contentDescription = "Logo",
-                    colorFilter = ColorFilter.tint(App_color),
-                    modifier = Modifier.size(120.dp)
-                )
-                Text("sikandar@gmail.com", style = MaterialTheme.typography.bodyLarge)
-                Spacer(modifier = Modifier.height(5.dp))
-                Text("+918601854014", style = MaterialTheme.typography.bodyMedium)
-                Spacer(modifier = Modifier.height(10.dp))
-            }
-
-            HorizontalDivider(thickness = 1.dp, color = Color.Black)
-            LazyColumn(
-                modifier = Modifier.padding(vertical = 0.dp, horizontal = 0.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                item { Spacer(modifier = Modifier.height(10.dp)) }
-
-                items(15) { index ->
-                    DrawerItem(
-                        title = "Item ${index + 1}",
-                        icon = Icons.Filled.KeyboardArrowUp,
-                        onClick = { onItemClick("Drawer Item ${index + 1}") }
+                // Header content
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth().clickable {
+                            onProClick()
+                        }.padding(10.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.baseline_camera),
+                        contentDescription = "Logo",
+                        colorFilter = ColorFilter.tint(App_color),
+                        modifier = Modifier.size(120.dp)
                     )
+                    Text("sikandar@gmail.com", style = MaterialTheme.typography.bodyLarge)
+                    Spacer(modifier = Modifier.height(5.dp))
+                    Text("+918601854014", style = MaterialTheme.typography.bodyMedium)
+                }
+
+                // Divider
+                HorizontalDivider(thickness = 1.dp, color = Color.Black)
+                Spacer(modifier = Modifier.height(5.dp))
+                // LazyColumn for list items
+                LazyColumn(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    items(15) { index ->
+                        DrawerItem(
+                            title = "Item ${index + 1}",
+                            icon = Icons.Filled.KeyboardArrowUp,
+                            onClick = { onItemClick("Drawer Item ${index + 1}") }
+                        )
+                        Spacer(modifier = Modifier.height(5.dp))
+                    }
                 }
             }
-        }
-        // Fixed content at the bottom
-        Column(
-            modifier = Modifier
-                .align(BottomCenter)
-                .padding(12.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = "New JetPack App",
-                style = MaterialTheme.typography.bodyMedium,
-                color = Color.DarkGray
+        } ,
+        bottomBar = {
+            BottomAppBar(
+                content = {
+                    Column(modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = "New JetPack App",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Color.DarkGray
+                        )
+                        Text(
+                            text = "Version 1.0.0",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.DarkGray
+                        )
+                    }
+                }
             )
-            Text(
-                text = "Version 1.0.0",
-                style = MaterialTheme.typography.bodySmall,
-                color = Color.DarkGray
-            )
-        }
-    }
+        },
+    )
 }
 
 @Composable
