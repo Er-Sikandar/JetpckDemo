@@ -102,16 +102,6 @@ fun NewGetNavHost(navController: NavHostController = rememberNavController()) {
                 onNavHomeToWeb = { url, type ->
                     navController.navigate("webview?url=${Uri.encode(url)}&type=$type")
                 },
-                onNavHomeToHome = {
-                    navController.navigate(HOME_TO_HOME_ROUTE)
-                },
-                onNavHomeToProfile = {
-                    navController.navigate(PROFILE_ROUTE)
-                },
-                onNavHomeToSettings = {
-                    navController.navigate(SETTINGS_ROUTE)
-                },
-
                 onNavigateHomeToLogin = {
                     navController.navigate(LOGIN_ROUTE) {
                         popUpTo(navController.graph.startDestinationId) {
@@ -119,6 +109,15 @@ fun NewGetNavHost(navController: NavHostController = rememberNavController()) {
                         }
                         launchSingleTop = true
                     }
+                },
+                /*onNavHomeToHome = {
+                    navController.navigate(HOME_TO_HOME_ROUTE)
+                },
+                onNavHomeToSettings = {
+                    navController.navigate(SETTINGS_ROUTE)
+                },*/
+                onNavHomeToProfile = {
+                    navController.navigate(PROFILE_ROUTE)
                 },
                 onNavHomeToNoty = {
                     navController.navigate(NOTIFICATIONS_ROUTE)

@@ -1,9 +1,12 @@
 package com.example.newjetpackapp.activity
 
 import android.content.Context
-import android.util.Log
 import android.view.KeyEvent
+import android.view.View
 import android.webkit.WebChromeClient
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
@@ -28,10 +31,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import com.example.newjetpackapp.component.appBar
 import com.example.newjetpackapp.utils.CallFun.showLog
-import java.lang.Thread.sleep
 
 @Composable
-fun WebViewScreen(onBackToHome: () -> Unit,url: String,type:Int) {
+fun WebViewScreen(onBackToHome: () -> Unit, url: String, type: Int) {
     val context: Context = LocalContext.current
     var progress by remember { mutableStateOf(0) }
     var isLoading by remember { mutableStateOf(true) }
@@ -41,26 +43,29 @@ fun WebViewScreen(onBackToHome: () -> Unit,url: String,type:Int) {
 
     Scaffold(
         topBar = {
-            appBar("Web Sites",onBackToHome,false, Icons.Filled.Info, onActClick = {
+            appBar("Web Sites", onBackToHome, false, Icons.Filled.Info, onActClick = {
                 Toast.makeText(context, "Clicked: Act", Toast.LENGTH_SHORT).show()
             })
         }
-    ){innerPadding->
-        Surface(modifier = Modifier
-            .fillMaxSize()
-            .padding(innerPadding)) {
+    ) { innerPadding ->
+        Surface(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
             Column {
                 if (isLoading) {
-                    LinearProgressIndicator(progress = progress / 100f,
-                        modifier = Modifier.fillMaxWidth(), Color.Red)
+                    LinearProgressIndicator(
+                        progress = progress / 100f,
+                        modifier = Modifier.fillMaxWidth(), Color.Red
+                    )
                 }
                 AndroidView(factory = { context ->
                     WebView(context).apply {
                         webViewClient = object : WebViewClient() {
                             override fun onPageFinished(view: WebView?, url: String?) {
                                 super.onPageFinished(view, url)
-
-                                isLoading = false
+                                  isLoading = false
                             }
                         }
                         webChromeClient = object : WebChromeClient() {
@@ -69,10 +74,46 @@ fun WebViewScreen(onBackToHome: () -> Unit,url: String,type:Int) {
                                 isLoading = newProgress < 100
                             }
                         }
+                        webViewClient = object : WebViewClient() {
+                            override fun onReceivedError(
+                                view: WebView?,
+                                request: WebResourceRequest?,
+                                error: WebResourceError?
+                            ) {
+                                super.onReceivedError(view, request, error)
+                                showLog(
+                                    "WebViewError",
+                                    "Error: ${error?.description} on URL: ${request?.url}"
+                                )
+                            }
+
+                            override fun onReceivedHttpError(
+                                view: WebView?,
+                                request: WebResourceRequest?,
+                                errorResponse: WebResourceResponse?
+                            ) {
+                                super.onReceivedHttpError(view, request, errorResponse)
+                                showLog(
+                                    "WebViewHttpError",
+                                    "HTTP error ${errorResponse?.statusCode} on URL: ${request?.url}"
+                                )
+                            }
+                        }
                         settings.javaScriptEnabled = true
                         settings.domStorageEnabled = true
+                        settings.useWideViewPort = true
+                        settings.setSupportZoom(true)
+                        settings.setAllowFileAccessFromFileURLs(true)
+                        settings.setAllowUniversalAccessFromFileURLs(true)
+                        settings.builtInZoomControls = true
+                        settings.displayZoomControls = false
+                        setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY)
                         showLog("TAG", "WebView Init: ${url}")
-                        loadUrl(url)
+                        if (type == 1) {
+                            loadUrl("https://drive.google.com/viewerng/viewer?embedded=true&url=$url")
+                        } else {
+                            loadUrl(url)
+                        }
                         setOnKeyListener { _, keyCode, event ->
                             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK) {
                                 if (canGoBack()) {
@@ -92,7 +133,7 @@ fun WebViewScreen(onBackToHome: () -> Unit,url: String,type:Int) {
                 }, update = { webView ->
                     showLog("TAG", "Update: ${webView.url}")
                     canGoBack = webView.canGoBack()
-                    webView.loadUrl(url)
+                    webView.loadUrl(webView.url!!)
                 })
             }
 

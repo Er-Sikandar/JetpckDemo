@@ -1,7 +1,6 @@
 package com.example.newjetpackapp.activity
 
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -68,18 +67,17 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavHostController,onNavHomeToWeb:(String, Int)->Unit,onNavHomeToHome:()->Unit,onNavHomeToProfile:()->Unit, onNavHomeToSettings:()->Unit, onNavigateHomeToLogin:()->Unit,onNavHomeToNoty:()->Unit, onExitApp: () -> Unit){
+fun HomeScreen(navController: NavHostController,onNavHomeToWeb:(String, Int)->Unit, onNavigateHomeToLogin:()->Unit,onNavHomeToProfile:()->Unit,onNavHomeToNoty:()->Unit, onExitApp: () -> Unit){
     val context:Context = LocalContext.current
     var doubleBackToExitPressedOnce by remember { mutableStateOf(false) }
     val drawerState:DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope:CoroutineScope = rememberCoroutineScope()
 
+
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            Box(modifier = Modifier
-                .fillMaxWidth(0.7f)
-                .fillMaxHeight()
+            Box(modifier = Modifier.fillMaxWidth(0.7f).fillMaxHeight()
                 .clip(RoundedCornerShape(topEnd = 12.dp, bottomEnd = 12.dp))
                 .background(MaterialTheme.colorScheme.surface)
             ) {
@@ -94,7 +92,10 @@ fun HomeScreen(navController: NavHostController,onNavHomeToWeb:(String, Int)->Un
                             drawerState.close()
                         }
                        println("Clicked on Drawer: $item")
-                       onNavHomeToWeb("https://jetpackcompose.net/", 11)
+
+                      // onNavHomeToWeb("https://jetpackcompose.net/", 0)
+                       onNavHomeToWeb("https://www.antennahouse.com/hubfs/xsl-fo-sample/pdf/basic-link-1.pdf", 1)
+
                 })
             }
         },
@@ -133,9 +134,7 @@ fun HomeScreen(navController: NavHostController,onNavHomeToWeb:(String, Int)->Un
                 }
             ) { innerPadding ->
                 Surface(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding)
+                    modifier = Modifier.fillMaxSize().padding(innerPadding)
                 ) {
                     /*NavHost(
                         navController = navController,

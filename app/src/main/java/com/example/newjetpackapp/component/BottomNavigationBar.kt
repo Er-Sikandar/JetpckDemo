@@ -12,10 +12,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 
 @Composable
-fun BottomNavigationBar(navController: NavHostController) {
+fun BottomNavigationBar(navController: NavController) {
     val items = listOf(BottomNavItem.HomeToHome, BottomNavItem.Profile, BottomNavItem.Settings)
     NavigationBar {
         val currentRoute = navController.currentBackStackEntry?.destination?.route
