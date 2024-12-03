@@ -54,8 +54,7 @@ fun NotyScreen(onBackToHome: () -> Unit){
                 items(12) { index ->
                     Box(modifier = Modifier
                         .padding(5.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(Color.White)) {
+                        .clip(RoundedCornerShape(8.dp))) {
                         Row(modifier = Modifier
                             .fillMaxWidth()
                             .clickable {

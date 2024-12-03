@@ -1,5 +1,7 @@
 package com.example.newjetpackapp.activity
 
+import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -17,6 +19,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -48,6 +51,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.newjetpackapp.R
 import com.example.newjetpackapp.component.BottomNavItem
 import com.example.newjetpackapp.component.BottomNavigationBar
@@ -58,23 +62,24 @@ import com.example.newjetpackapp.component.Destinations.SETTINGS_ROUTE
 import com.example.newjetpackapp.component.DrawerContent
 import com.example.newjetpackapp.theme.Primary_color
 import com.example.newjetpackapp.utils.Prefs
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavHostController,onNavHomeToHome:()->Unit,onNavHomeToProfile:()->Unit, onNavHomeToSettings:()->Unit, onNavigateHomeToLogin:()->Unit,onNavHomeToNoty:()->Unit, onExitApp: () -> Unit){
+fun HomeScreen(navController: NavHostController,onNavHomeToWeb:(String, Int)->Unit,onNavHomeToHome:()->Unit,onNavHomeToProfile:()->Unit, onNavHomeToSettings:()->Unit, onNavigateHomeToLogin:()->Unit,onNavHomeToNoty:()->Unit, onExitApp: () -> Unit){
+    val context:Context = LocalContext.current
     var doubleBackToExitPressedOnce by remember { mutableStateOf(false) }
-    val context = LocalContext.current
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val coroutineScope = rememberCoroutineScope()
-    val items = listOf("Home", "Profile", "Settings")
-    var selectedItem by remember { mutableStateOf(0) }
+    val drawerState:DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val coroutineScope:CoroutineScope = rememberCoroutineScope()
 
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            Box(modifier = Modifier.fillMaxWidth(0.7f).fillMaxHeight()
+            Box(modifier = Modifier
+                .fillMaxWidth(0.7f)
+                .fillMaxHeight()
                 .clip(RoundedCornerShape(topEnd = 12.dp, bottomEnd = 12.dp))
                 .background(MaterialTheme.colorScheme.surface)
             ) {
@@ -85,11 +90,11 @@ fun HomeScreen(navController: NavHostController,onNavHomeToHome:()->Unit,onNavHo
                       drawerState.close()
                      }
                 },onItemClick = { item ->
-                    println("Clicked on Drawer: $item")
-                    Toast.makeText(context, "Clicked: $item", Toast.LENGTH_SHORT).show()
-                    coroutineScope.launch {
-                        drawerState.close()
-                    }
+                        coroutineScope.launch {
+                            drawerState.close()
+                        }
+                       println("Clicked on Drawer: $item")
+                       onNavHomeToWeb("https://jetpackcompose.net/", 11)
                 })
             }
         },
@@ -121,10 +126,6 @@ fun HomeScreen(navController: NavHostController,onNavHomeToHome:()->Unit,onNavHo
                                 Icon(Icons.Filled.Notifications,tint = Primary_color, contentDescription = null)
                             }
                         },
-                        colors = TopAppBarDefaults.topAppBarColors(
-                            containerColor = Color.White,
-                            titleContentColor = Color.Black
-                        )
                     )
                 },
                 bottomBar = {
@@ -132,23 +133,29 @@ fun HomeScreen(navController: NavHostController,onNavHomeToHome:()->Unit,onNavHo
                 }
             ) { innerPadding ->
                 Surface(
-                    modifier = Modifier.fillMaxSize().padding(innerPadding)
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding)
                 ) {
+                    /*NavHost(
+                        navController = navController,
+                        startDestination = "home_to_home",
+                        modifier = Modifier.padding(innerPadding),
+                        builder = {
+                            composable("home_to_home") {
+                               onNavHomeToHome()
+                            }
+                            composable("profile") {
+                               onNavHomeToProfile()
+                            }
+                            composable("settings") {
+                               onNavHomeToSettings()
+                            }
+                        })*/
 
 
 
 
-                    /*Column(
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        ElevatedButton(onClick = {
-                            Prefs.getInstance().logout()
-                            onNavigateHomeToLogin()
-                        }) {
-                            Text("Logout")
-                        }
-                    }*/
                 }
 
             }
@@ -172,3 +179,4 @@ fun HomeScreen(navController: NavHostController,onNavHomeToHome:()->Unit,onNavHo
     }
 
 }
+

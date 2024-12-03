@@ -42,9 +42,9 @@ fun AppLogo(size: Dp) {
 @Composable
 fun appBar(title: String, onBackToHome: () -> Unit, isAct: Boolean, icon: ImageVector,onActClick:()->Unit) {
     TopAppBar(
-        colors = TopAppBarDefaults.topAppBarColors(
+       /* colors = TopAppBarDefaults.topAppBarColors(
             containerColor = Color.White
-        ),
+        ),*/
         navigationIcon = {
             IconButton(onClick = {
                 onBackToHome()
@@ -73,7 +73,7 @@ fun appBar(title: String, onBackToHome: () -> Unit, isAct: Boolean, icon: ImageV
                     )
                 }
             } else {
-                Box(modifier = Modifier.background(Color.White).size(50.dp))
+                Box(modifier = Modifier.size(50.dp))
             }
         },
     )
