@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
@@ -67,7 +68,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavHostController,onNavHomeToWeb:(String, Int)->Unit, onNavigateHomeToLogin:()->Unit,onNavHomeToProfile:()->Unit,onNavHomeToNoty:()->Unit, onExitApp: () -> Unit){
+fun HomeScreen(navController: NavHostController,onNavHomeToWeb:(String, Int)->Unit, onNavigateHomeToLogin:()->Unit,onNavHomeToProfile:()->Unit,onNavHomeToSlice:()->Unit,onNavHomeToNoty:()->Unit, onExitApp: () -> Unit){
     val context:Context = LocalContext.current
     var doubleBackToExitPressedOnce by remember { mutableStateOf(false) }
     val drawerState:DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -91,11 +92,9 @@ fun HomeScreen(navController: NavHostController,onNavHomeToWeb:(String, Int)->Un
                         coroutineScope.launch {
                             drawerState.close()
                         }
-                       println("Clicked on Drawer: $item")
-
-                      // onNavHomeToWeb("https://jetpackcompose.net/", 0)
-                       onNavHomeToWeb("https://www.antennahouse.com/hubfs/xsl-fo-sample/pdf/basic-link-1.pdf", 1)
-
+                       onNavHomeToWeb("https://jetpackcompose.net/", 0)
+                      // onNavHomeToWeb("https://www.antennahouse.com/hubfs/xsl-fo-sample/pdf/basic-link-1.pdf", 1)
+                        println("Clicked on Drawer: $item")
                 })
             }
         },
@@ -121,6 +120,11 @@ fun HomeScreen(navController: NavHostController,onNavHomeToWeb:(String, Int)->Un
                             }
                         },
                         actions = {
+                            IconButton(onClick = {
+                                onNavHomeToSlice()
+                            }) {
+                                Icon(Icons.Filled.Info,tint = Primary_color, contentDescription = null)
+                            }
                             IconButton(onClick = {
                                 onNavHomeToNoty()
                             }) {

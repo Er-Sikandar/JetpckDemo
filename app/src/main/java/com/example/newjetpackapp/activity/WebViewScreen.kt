@@ -1,6 +1,7 @@
 package com.example.newjetpackapp.activity
 
 import android.content.Context
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.webkit.WebChromeClient
@@ -38,7 +39,8 @@ fun WebViewScreen(onBackToHome: () -> Unit, url: String, type: Int) {
     var progress by remember { mutableStateOf(0) }
     var isLoading by remember { mutableStateOf(true) }
     var canGoBack by remember { mutableStateOf(false) }
-    var webView: WebView? = null
+    var webView by remember { mutableStateOf<WebView?>(null) }
+    // var webView: WebView? = null
     showLog("WebView", "URL: $url and Type: $type")
 
     Scaffold(
@@ -60,12 +62,32 @@ fun WebViewScreen(onBackToHome: () -> Unit, url: String, type: Int) {
                         modifier = Modifier.fillMaxWidth(), Color.Red
                     )
                 }
-                AndroidView(factory = { context ->
+                AndroidView(modifier = Modifier.fillMaxSize(), factory = { context ->
                     WebView(context).apply {
+                        settings.javaScriptEnabled = true
+                        settings.domStorageEnabled = true
+                        settings.loadWithOverviewMode = true
+                        settings.useWideViewPort = true
+                        settings.setSupportZoom(true)
+                        settings.allowFileAccessFromFileURLs = true
+                        settings.allowUniversalAccessFromFileURLs = true
+                        settings.builtInZoomControls = true
+                        settings.displayZoomControls = false
+                        setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY)
+                        webViewClient = object : WebViewClient() {
+                            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+                                /*showLog("TAG", "shouldOverrideUrlLoading: $url")
+                                if (url.contains("redirect") || url.startsWith("https://unwanted-domain.com")) {
+                                    showLog("TAG", "Blocked URL: $url")
+                                    return true
+                                }*/
+                                return false
+                            }
+                        }
                         webViewClient = object : WebViewClient() {
                             override fun onPageFinished(view: WebView?, url: String?) {
                                 super.onPageFinished(view, url)
-                                  isLoading = false
+                                isLoading = false
                             }
                         }
                         webChromeClient = object : WebChromeClient() {
@@ -81,10 +103,7 @@ fun WebViewScreen(onBackToHome: () -> Unit, url: String, type: Int) {
                                 error: WebResourceError?
                             ) {
                                 super.onReceivedError(view, request, error)
-                                showLog(
-                                    "WebViewError",
-                                    "Error: ${error?.description} on URL: ${request?.url}"
-                                )
+                                showLog("WebViewError", "Error: ${error?.description} on URL: ${request?.url}")
                             }
 
                             override fun onReceivedHttpError(
@@ -93,21 +112,9 @@ fun WebViewScreen(onBackToHome: () -> Unit, url: String, type: Int) {
                                 errorResponse: WebResourceResponse?
                             ) {
                                 super.onReceivedHttpError(view, request, errorResponse)
-                                showLog(
-                                    "WebViewHttpError",
-                                    "HTTP error ${errorResponse?.statusCode} on URL: ${request?.url}"
-                                )
+                                showLog("WebViewHttpError", "HTTP error ${errorResponse?.statusCode} on URL: ${request?.url}")
                             }
                         }
-                        settings.javaScriptEnabled = true
-                        settings.domStorageEnabled = true
-                        settings.useWideViewPort = true
-                        settings.setSupportZoom(true)
-                        settings.setAllowFileAccessFromFileURLs(true)
-                        settings.setAllowUniversalAccessFromFileURLs(true)
-                        settings.builtInZoomControls = true
-                        settings.displayZoomControls = false
-                        setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY)
                         showLog("TAG", "WebView Init: ${url}")
                         if (type == 1) {
                             loadUrl("https://drive.google.com/viewerng/viewer?embedded=true&url=$url")
@@ -147,4 +154,7 @@ fun WebViewScreen(onBackToHome: () -> Unit, url: String, type: Int) {
             onBackToHome()
         }
     }
+}
+private fun shouldBlockUrl(url: String): Boolean {
+    return !url.startsWith("https://your-allowed-domain.com")
 }

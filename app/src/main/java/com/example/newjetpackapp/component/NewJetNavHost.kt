@@ -18,6 +18,7 @@ import com.example.newjetpackapp.activity.ProfileScreen
 import com.example.newjetpackapp.activity.SettingsScreen
 import com.example.newjetpackapp.activity.login.LoginScreen
 import com.example.newjetpackapp.activity.SignUp
+import com.example.newjetpackapp.activity.SliceScreen
 import com.example.newjetpackapp.activity.SplashScreen
 import com.example.newjetpackapp.activity.WebViewScreen
 import com.example.newjetpackapp.activity.login.LoginViewModel
@@ -28,8 +29,10 @@ import com.example.newjetpackapp.component.Destinations.NOTIFICATIONS_ROUTE
 import com.example.newjetpackapp.component.Destinations.PROFILE_ROUTE
 import com.example.newjetpackapp.component.Destinations.SETTINGS_ROUTE
 import com.example.newjetpackapp.component.Destinations.SIGNUP_ROUTE
+import com.example.newjetpackapp.component.Destinations.SLICE_MENU_ROUTE
 import com.example.newjetpackapp.component.Destinations.SPLASH_ROUTE
 import com.example.newjetpackapp.component.Destinations.WEBVIEW_ROUTE
+import com.example.newjetpackapp.utils.CallFun.showLog
 import com.example.newjetpackapp.utils.Const
 import com.example.newjetpackapp.utils.Prefs
 
@@ -41,6 +44,7 @@ object Destinations {
     const val HOME_TO_HOME_ROUTE = "home_to_home"
     const val PROFILE_ROUTE = "profile"
     const val SETTINGS_ROUTE = "settings"
+    const val SLICE_MENU_ROUTE = "slice_menu"
     const val NOTIFICATIONS_ROUTE = "notifications"
     const val WEBVIEW_ROUTE = "webview?url={url}&type={type}"
 
@@ -122,6 +126,9 @@ fun NewGetNavHost(navController: NavHostController = rememberNavController()) {
                 onNavHomeToNoty = {
                     navController.navigate(NOTIFICATIONS_ROUTE)
                 },
+                onNavHomeToSlice = {
+                    navController.navigate(SLICE_MENU_ROUTE)
+                },
                 onExitApp = {
                     activity?.finish()
                 }
@@ -171,6 +178,9 @@ fun NewGetNavHost(navController: NavHostController = rememberNavController()) {
             )
         }
 
+        composable(SLICE_MENU_ROUTE) {
+            SliceScreen()
+        }
 
 
 
