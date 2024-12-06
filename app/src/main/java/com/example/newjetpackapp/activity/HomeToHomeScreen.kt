@@ -12,17 +12,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun HomeToHomeScreen(onBackToHome: () -> Unit){
+fun HomeToHomeScreen(){
 
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
-            ElevatedButton(
-                onClick = {onBackToHome()},
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Back to Home")
-            }
-            Text(text = "Home To Home")
+            Text(text = "DashBoard")
         }
 
     }

@@ -102,7 +102,6 @@ fun NewGetNavHost(navController: NavHostController = rememberNavController()) {
         composable(HOME_ROUTE) {
             val activity = (LocalContext.current as? Activity)
             HomeScreen(
-                navController,
                 onNavHomeToWeb = { url, type ->
                     navController.navigate("webview?url=${Uri.encode(url)}&type=$type")
                 },
@@ -113,15 +112,6 @@ fun NewGetNavHost(navController: NavHostController = rememberNavController()) {
                         }
                         launchSingleTop = true
                     }
-                },
-                /*onNavHomeToHome = {
-                    navController.navigate(HOME_TO_HOME_ROUTE)
-                },
-                onNavHomeToSettings = {
-                    navController.navigate(SETTINGS_ROUTE)
-                },*/
-                onNavHomeToProfile = {
-                    navController.navigate(PROFILE_ROUTE)
                 },
                 onNavHomeToNoty = {
                     navController.navigate(NOTIFICATIONS_ROUTE)
@@ -135,26 +125,14 @@ fun NewGetNavHost(navController: NavHostController = rememberNavController()) {
             )
         }
         composable(HOME_TO_HOME_ROUTE) {
-            HomeToHomeScreen(
-                onBackToHome = {
-                    navController.popBackStack()
-                }
-            )
+            HomeToHomeScreen()
         }
         composable(PROFILE_ROUTE) {
-            ProfileScreen(
-                onBackToHome = {
-                    navController.popBackStack()
-                }
-            )
+            ProfileScreen()
         }
 
         composable(SETTINGS_ROUTE) {
-            SettingsScreen(
-                onBackToHome = {
-                    navController.popBackStack()
-                }
-            )
+            SettingsScreen()
         }
         composable(NOTIFICATIONS_ROUTE) {
             NotyScreen(

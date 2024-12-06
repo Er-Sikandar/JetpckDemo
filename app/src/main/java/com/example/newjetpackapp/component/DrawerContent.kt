@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.BottomAppBar
@@ -32,10 +33,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.newjetpackapp.R
+import com.example.newjetpackapp.models.DrawerMenuModel
 import com.example.newjetpackapp.theme.App_color
 
 @Composable
-fun DrawerContent(onProClick:()->Unit,onItemClick: (String) -> Unit) {
+fun DrawerContent(itemsList: ArrayList<DrawerMenuModel>,onProClick:()->Unit,onItemClick: (Int) -> Unit) {
     Scaffold(
         content = { paddingValues ->
             Column(
@@ -65,14 +67,14 @@ fun DrawerContent(onProClick:()->Unit,onItemClick: (String) -> Unit) {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    items(8) { index ->
+                    items(itemsList) { item ->
                         DrawerItem(
-                            title = "Item ${index + 1}",
+                            title = item.name,
                             icon = Icons.Filled.KeyboardArrowUp,
-                            onClick = { onItemClick("Drawer Item ${index + 1}") }
+                            onClick = { onItemClick(item.id) }
                         )
                         Spacer(modifier = Modifier.height(5.dp))
-                    }
+                   }
                 }
             }
         } ,

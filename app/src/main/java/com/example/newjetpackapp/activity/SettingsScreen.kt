@@ -12,12 +12,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun SettingsScreen(onBackToHome: () -> Unit){
+fun SettingsScreen(){
 
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
             ElevatedButton(
-                onClick = {onBackToHome()},
+                onClick = {
+
+                },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Back to Home")

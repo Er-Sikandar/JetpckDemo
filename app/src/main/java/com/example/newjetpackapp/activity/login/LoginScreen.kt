@@ -55,16 +55,9 @@ import com.example.newjetpackapp.utils.Prefs
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
-/*fun LoginScreen(navController: NavController, arguments: Bundle){
-    val username = arguments.getString(Const.USER_NAME) ?: Const.EMPTY
-    val email = arguments.getString(Const.EMAIL) ?: Const.EMPTY
-    Log.e("TAG", "LoginScreen: "+email)*/
 fun LoginScreen(onNavigateSignUp: () -> Unit,onNavigateHome: () -> Unit, loginViewModel: LoginViewModel){
-  /*  var expanded by rememberSaveable { mutableStateOf(false) }
-    val extraPadding by animateDpAsState(if (expanded) 48.dp else 0.dp)*/
     val context = LocalContext.current
     val (textMob, setTextState) = remember { mutableStateOf(TextFieldValue()) }
-   // val loginState by loginViewModel.loginState.observeAsState()
     val loginState by loginViewModel.loginState.observeAsState(Resource.Idle)
     var isLoading by remember { mutableStateOf(false) }
 
